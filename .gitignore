@@ -1,0 +1,18 @@
+# Terraform
+server/terraform/*.tfstate
+server/terraform/*.tfstate.backup
+server/terraform/.terraform/
+server/terraform/.terraform.lock.hcl
+server/terraform/terraform.tfvars
+
+# Secrets
+.env
+.env.production
+*.pem
+*.key
+
+# OS
+.DS_Store
+
+# Certbot certs (generated on server, not in git)
+proxy/certbot/
