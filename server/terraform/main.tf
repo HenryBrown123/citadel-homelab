@@ -103,7 +103,7 @@ resource "cloudflare_record" "citadel" {
 
 resource "cloudflare_record" "citadel_vault" {
   zone_id = var.cloudflare_zone_id
-  name    = "vault.${var.subdomain}"
+  name    = "${var.subdomain}-vault"
   content = hcloud_server.citadel.ipv4_address
   type    = "A"
   ttl     = 1
@@ -112,7 +112,7 @@ resource "cloudflare_record" "citadel_vault" {
 
 resource "cloudflare_record" "citadel_monitor" {
   zone_id = var.cloudflare_zone_id
-  name    = "monitor.${var.subdomain}"
+  name    = "${var.subdomain}-monitor"
   content = hcloud_server.citadel.ipv4_address
   type    = "A"
   ttl     = 1
@@ -121,7 +121,7 @@ resource "cloudflare_record" "citadel_monitor" {
 
 resource "cloudflare_record" "citadel_logs" {
   zone_id = var.cloudflare_zone_id
-  name    = "logs.${var.subdomain}"
+  name    = "${var.subdomain}-logs"
   content = hcloud_server.citadel.ipv4_address
   type    = "A"
   ttl     = 1

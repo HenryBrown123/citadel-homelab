@@ -9,13 +9,13 @@ output "ssh_command" {
 }
 
 output "vault_url" {
-  value = "https://vault.${var.subdomain}.hbprojects.app"
+  value = "https://${var.subdomain}-vault.hbprojects.app"
 }
 
 output "monitor_url" {
-  value = "https://monitor.${var.subdomain}.hbprojects.app"
+  value = "https://${var.subdomain}-monitor.hbprojects.app"
 }
 
 output "logs_url" {
-  value = "https://logs.${var.subdomain}.hbprojects.app"
+  value = "https://${var.subdomain}-logs.hbprojects.app"
 }

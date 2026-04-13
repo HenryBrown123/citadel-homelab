@@ -9,7 +9,7 @@
 resource "cloudflare_zero_trust_access_application" "vault" {
   zone_id          = var.cloudflare_zone_id
   name             = "Citadel Vault"
-  domain           = "vault.citadel.hbprojects.app"
+  domain           = "citadel-vault.hbprojects.app"
   type             = "self_hosted"
   session_duration = "24h"
 }
@@ -30,7 +30,7 @@ resource "cloudflare_zero_trust_access_policy" "vault_policy" {
 resource "cloudflare_zero_trust_access_application" "monitor" {
   zone_id          = var.cloudflare_zone_id
   name             = "Citadel Monitor"
-  domain           = "monitor.citadel.hbprojects.app"
+  domain           = "citadel-monitor.hbprojects.app"
   type             = "self_hosted"
   session_duration = "24h"
 }
@@ -51,7 +51,7 @@ resource "cloudflare_zero_trust_access_policy" "monitor_policy" {
 resource "cloudflare_zero_trust_access_application" "logs" {
   zone_id          = var.cloudflare_zone_id
   name             = "Citadel Logs"
-  domain           = "logs.citadel.hbprojects.app"
+  domain           = "citadel-logs.hbprojects.app"
   type             = "self_hosted"
   session_duration = "24h"
 }

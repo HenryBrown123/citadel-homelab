@@ -10,4 +10,4 @@ listener "tcp" {
 }
 
 disable_mlock = true
-api_addr      = "https://vault.citadel.hbprojects.app"
+api_addr      = "https://citadel-vault.hbprojects.app"

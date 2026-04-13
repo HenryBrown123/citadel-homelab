@@ -17,9 +17,9 @@ docker run --rm -p 80:80 \
   --standalone \
   --non-interactive \
   -d "$DOMAIN" \
-  -d "vault.$DOMAIN" \
-  -d "monitor.$DOMAIN" \
-  -d "logs.$DOMAIN" \
+  -d "citadel-vault.hbprojects.app" \
+  -d "citadel-monitor.hbprojects.app" \
+  -d "citadel-logs.hbprojects.app" \
   --agree-tos \
   -m "$EMAIL"
 
@@ -35,9 +35,9 @@ cat << BANNER
    | |____| | || (_| | (_| |  __/ |
     \_____|_|\__\__,_|\__,_|\___|_|
 
-  Vault:   https://vault.$DOMAIN
-  Monitor: https://monitor.$DOMAIN
-  Logs:    https://logs.$DOMAIN
+  Vault:   https://citadel-vault.hbprojects.app
+  Monitor: https://citadel-monitor.hbprojects.app
+  Logs:    https://citadel-logs.hbprojects.app
 
   NEXT: Visit Vault URL to initialize.
   Save your unseal key and root token somewhere safe.
