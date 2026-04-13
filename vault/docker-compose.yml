@@ -1,0 +1,23 @@
+services:
+  vault:
+    image: hashicorp/vault:1.17
+    container_name: citadel-vault
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    environment:
+      VAULT_ADDR: "http://0.0.0.0:8200"
+      VAULT_API_ADDR: "https://vault.citadel.hbprojects.app"
+    volumes:
+      - vault-data:/vault/data
+      - ./config:/vault/config
+    command: vault server -config=/vault/config/vault.hcl
+    healthcheck:
+      test: ["CMD", "vault", "status", "-address=http://127.0.0.1:8200"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  vault-data:
