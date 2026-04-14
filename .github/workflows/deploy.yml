@@ -15,9 +15,9 @@ jobs:
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          echo "${{ secrets.CITADEL_DEPLOY_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.CITADEL_DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to server
         run: |
@@ -26,12 +26,13 @@ jobs:
             --exclude='proxy/certs' \
             --exclude='.DS_Store' \
             --exclude='server/terraform' \
+            --exclude='demos/*/dist' \
             -e "ssh -i ~/.ssh/deploy_key" \
-            ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/opt/citadel/
+            ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.CITADEL_DEPLOY_HOST }}:/opt/citadel/
 
       - name: Restart services
         run: |
-          ssh -i ~/.ssh/deploy_key ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          ssh -i ~/.ssh/deploy_key ${{ secrets.DEPLOY_USER }}@${{ secrets.CITADEL_DEPLOY_HOST }} << 'EOF'
             cd /opt/citadel
             docker compose pull
             docker compose up -d
