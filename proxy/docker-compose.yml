@@ -3,11 +3,10 @@ services:
     image: nginx:alpine
     container_name: citadel-nginx
     restart: unless-stopped
-    depends_on:
-      - music-visualiser
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./certs:/etc/nginx/certs:ro
+      - ../demos/music-visualiser/dist:/usr/share/nginx/demos/music-visualiser:ro
