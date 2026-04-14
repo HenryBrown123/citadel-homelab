@@ -36,4 +36,5 @@ jobs:
             cd /opt/citadel
             docker compose pull
             docker compose up -d
+            docker exec citadel-nginx nginx -s reload
           EOF
