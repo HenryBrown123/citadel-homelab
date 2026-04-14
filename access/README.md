@@ -1,36 +1,55 @@
-# Access — Cloudflare Zero Trust
+# Access
 
-All citadel services are protected by Cloudflare Access. Users must authenticate via email OTP before reaching any service.
+Cloudflare Zero Trust (Access) protects all citadel admin services. Requests are intercepted at Cloudflare's edge before they reach the server. Users must authenticate via email OTP to get a 24-hour session cookie.
 
 ## How it works
 
-1. User visits `vault.citadel.hbprojects.app`
-2. Cloudflare intercepts at the edge (before reaching your server)
-3. Shows a login page asking for email
-4. If email matches the allow list, sends a one-time code
-5. User enters code, gets a 24-hour session cookie
-6. Cloudflare forwards the request to your server
+1. User visits a protected subdomain (e.g. citadel-vault.hbprojects.app)
+2. Cloudflare intercepts the request at the edge
+3. User is shown a login page and enters their email
+4. If the email is on the allow list, Cloudflare sends a one-time code
+5. User enters the code and receives a 24-hour session cookie
+6. Cloudflare forwards the request to the origin server
 
-## Managed in Terraform
+## Configuration
 
-Access applications and policies are defined in `server/terraform/access.tf`.
+Access applications and policies are defined in Terraform at `server/terraform/access.tf`. Each protected service has:
 
-To add another allowed email:
+- An **access application** defining the subdomain and session duration
+- An **access policy** defining who can authenticate (currently email-based)
+
+Currently protected services: Vault, Monitor, Logs.
+
+Demo apps (e.g. music-visualiser) are intentionally public and not behind Access.
+
+## Maintenance
+
+### Adding access to a new service
+
+1. Add a `cloudflare_zero_trust_access_application` resource in `server/terraform/access.tf`
+2. Add a corresponding `cloudflare_zero_trust_access_policy`
+3. Run `terraform apply`
+
+### Allowing additional users
+
+Add emails to the policy's include block in `access.tf`:
+
 ```hcl
 include {
   email = [var.admin_email, "colleague@example.com"]
 }
 ```
 
-To add GitHub org-based access instead of email:
+### Alternative auth methods
+
+GitHub org-based access can be used instead of email OTP:
+
 ```hcl
 include {
-  github_organization = "your-org"
+  github_organization = "henrybrown"
 }
 ```
 
-## Adding Access to a new service
+### Removing access protection
 
-1. Add a new `cloudflare_zero_trust_access_application` resource
-2. Add a corresponding `cloudflare_zero_trust_access_policy`
-3. `terraform apply`
+Delete the access application and policy resources from `access.tf` and run `terraform apply`. The service will become publicly accessible (still behind SSL).
